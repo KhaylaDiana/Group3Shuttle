@@ -89,6 +89,18 @@ session_start();
 		
 		<?php
 		
+			// connect
+				$dsn = 'mysql:host=localhost;dbname=michniz1_shuttledb'; //replace michniz1 with your name
+				$username = 'michniz1_wizard';   
+				$password = 'qwerty456!!'; 
+			
+				try { 
+					$db = new PDO($dsn, $username, $password); 
+					} catch(PDOException $e) {
+						echo "Connection failed: " . $e->getMessage();
+						exit(); 
+					} 
+		
 			// get stuff from search info from db
 			$query = "select * from users";
 			
@@ -103,16 +115,24 @@ session_start();
 			{
 				echo "<tr>";
 				echo "<td>";
-				echo "<p>Username: ".$rows[$i][1]."</p>";
-				echo "<p>Password: ".$rows[$i][2]."</p>";
-				echo "<p>Role:     ".$rows[$i][3]."</p>";
+				echo "<p><b>User ".($i-1)."</b></p>";
+				echo "<p>Username: ".$rows[$i][0]."</p>";
+				echo "<p>Password: ".$rows[$i][1]."</p>";
+				echo "<p>Role:     ".$rows[$i][2]."</p>";
+				echo "<form method = 'post' action = 'adminEditUser.php'>";
+				echo "<input type = 'submit' value = 'Edit'>";
+				echo "</form>";
+				echo "<br>";
+				echo "<form method = 'post' action = 'adminDeleteUser'>";
+				echo "<input type = 'submit' value = 'Delete'>";
+				echo "</form>";
+				echo "</td>";
 				echo "</tr>";
 			}
 			echo "</table>";
-
+			
 			$statement->closeCursor();
 		?> 
-		
 		
 	</body>
 </html>
